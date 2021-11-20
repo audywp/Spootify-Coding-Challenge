@@ -8,6 +8,7 @@ import { searchSongs, setSearchSongs } from './redux/action';
 
 import Table from '../../common/components/Table/Table';
 import SearchInput from './Component/SearchInput';
+import { playSong } from '../../store/globalAction';
 
 export default function SearchContent() {
   const dispatch = useDispatch();
@@ -21,6 +22,10 @@ export default function SearchContent() {
     return () => dispatch(setSearchSongs({ artists: { items: [] }, tracks: { items: [] } }));
   }, []);
 
+  const savePlayedSong = (data) => {
+    dispatch(playSong(data));
+  };
+
   return (
     <CoreLayout>
       <SearchInput onChange={(e) => dispatch(searchSongs(e.target.value))} />
@@ -33,7 +38,17 @@ export default function SearchContent() {
           {Search.artists.items.length || Search.tracks.items.length ? (
             <>
               {/* <DiscoverBlock text='Tracks' id='Tracks' data={Search.artists.items} /> */}
-
+              <Table
+                column={[
+                  { title: 'Album', keyObject: 'album' },
+                  { title: '#Title', keyObject: 'name' },
+                  { title: 'Popularity', keyObject: 'popularity' },
+                  { title: 'Artist', keyObject: 'artists' },
+                  { title: 'Duration', keyObject: 'duration_ms' },
+                ]}
+                data={Search.tracks.items}
+                onClick={savePlayedSong}
+              />
               <DiscoverBlock text='Artists' id='artists' data={Search.artists.items} />
             </>
           ) : (

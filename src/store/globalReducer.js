@@ -6,11 +6,12 @@ import {
   SET_AUTHORIZATION_CODE,
   SET_USER_PROFILE,
   LOGOUT,
+  PLAY_SONG,
 } from './globalAction';
 import { faHeadphonesAlt, faHeart, faPlayCircle, faSearch, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 const initialState = {
-  playedSong: '',
+  playedSong: {},
   loading: false,
   isLogged: false,
   access_token: '',
@@ -52,6 +53,11 @@ const GlobalReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: action.payload,
+      };
+    case PLAY_SONG:
+      return {
+        ...state,
+        playedSong: action.payload,
       };
     case SET_USER_PROFILE:
       return {

@@ -7,50 +7,97 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import { Box } from '@mui/system';
+import { Avatar } from '@mui/material';
+
+import './_table.scss';
+import { millisToMinutesAndSeconds } from '../../../helpers/timeConverter';
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
 }
 
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-];
-
-export default function TableComponent({ column = [], data = [] }) {
+export default function TableComponent({ column = [], data = [], onClick = () => {} }) {
+  console.log(data);
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label='caption table'>
-        <TableHead>
-          <TableRow>
-            <TableCell>#Title</TableCell>
-            <TableCell align='right'>Album</TableCell>
-            <TableCell align='right'>Artist</TableCell>
-            <TableCell align='right'>
-              <AccessTimeIcon />
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.name}>
-              <TableCell style={{ borderBottom: 'none', border: 'none' }} component='th' scope='row'>
-                {row.name}
-              </TableCell>
-              <TableCell style={{ borderBottom: 'none', border: 'none' }} align='right'>
-                {row.calories}
-              </TableCell>
-              <TableCell style={{ borderBottom: 'none', border: 'none' }} align='right'>
-                {row.fat}
-              </TableCell>
-              <TableCell style={{ borderBottom: 'none', border: 'none' }} align='right'>
-                {row.carbs}
-              </TableCell>
+    <Box height='80%' mb={4} padding='0 20px'>
+      <Box mb={2}>
+        <div className='discover-block__header'>
+          <h2>Songs / Podcasts</h2>
+          <span />
+        </div>
+      </Box>
+      <TableContainer className='listsong__content' style={{ height: '90%' }} component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label='caption table'>
+          <TableHead>
+            <TableRow>
+              {column.map((val, ind) => {
+                return (
+                  <TableCell align='left'>
+                    <span>{val.title}</span>
+                  </TableCell>
+                );
+              })}
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {data.map((row) => (
+              <TableRow onClick={() => onClick(row)} hover key={row.name}>
+                {column.map((val, ind) => {
+                  if (val.keyObject === 'artists') {
+                    return (
+                      <TableCell
+                        align='left'
+                        style={{ borderBottom: 'none', border: 'none' }}
+                        component='th'
+                        scope='row'
+                      >
+                        <span>{row[val.keyObject][0].name}</span>
+                      </TableCell>
+                    );
+                  } else if (val.keyObject === 'album') {
+                    return (
+                      <TableCell
+                        align='left'
+                        style={{ borderBottom: 'none', border: 'none' }}
+                        component='th'
+                        scope='row'
+                      >
+                        {/* {row[val.keyObject]} */}
+                        <span>
+                          <Avatar alt={row[val.keyObject].name} src={row[val.keyObject].images[0].url} />
+                        </span>
+                      </TableCell>
+                    );
+                  } else if (val.keyObject === 'duration_ms') {
+                    return (
+                      <TableCell
+                        align='left'
+                        style={{ borderBottom: 'none', border: 'none' }}
+                        component='th'
+                        scope='row'
+                      >
+                        <span>{millisToMinutesAndSeconds(row[val.keyObject])}</span>
+                      </TableCell>
+                    );
+                  } else {
+                    return (
+                      <TableCell
+                        align='left'
+                        style={{ borderBottom: 'none', border: 'none' }}
+                        component='th'
+                        scope='row'
+                      >
+                        <span>{row[val.keyObject]}</span>
+                      </TableCell>
+                    );
+                  }
+                })}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Box>
   );
 }

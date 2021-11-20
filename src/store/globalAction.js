@@ -6,6 +6,7 @@ export const SET_AUTHORIZATION_CODE = 'SET_AUTHORIZATION_CODE';
 export const SET_USER_PROFILE = 'SET_USER_PROFILE';
 
 export const DO_LOGIN = 'DO_LOGIN';
+export const PLAY_SONG = 'PLAY_SONG';
 export const GET_PROFILE = 'GET_PROFILE';
 
 export const LOGOUT = 'LOGOUT';
@@ -25,5 +26,7 @@ export const setUserProfile = (payload) => ({ type: SET_USER_PROFILE, payload })
 export const doLogin = (payload, callback) => ({ type: DO_LOGIN, payload, callback });
 
 export const getProfile = (payload) => ({ type: GET_PROFILE, payload });
+
+export const playSong = (payload) => ({ type: PLAY_SONG, payload });
 
 export const logout = () => ({ type: LOGOUT });
