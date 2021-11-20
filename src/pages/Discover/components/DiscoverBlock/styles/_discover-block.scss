@@ -70,4 +70,8 @@
       margin-bottom: 20px;
     }
   }
+  &__column {
+    display: flex;
+    flex-wrap: wrap;
+  }
 }

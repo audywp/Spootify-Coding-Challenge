@@ -17,7 +17,7 @@ button {
 
 body {
   margin: 0;
-  background: #F9F8FF;
+  background: #f9f8ff;
 }
 
 html,
@@ -53,6 +53,11 @@ body,
       @media only screen and (max-width: 750px) {
         padding: 20px;
       }
+    }
+    &__center {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
   }
 }

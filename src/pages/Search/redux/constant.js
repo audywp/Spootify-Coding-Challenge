@@ -1,0 +1,3 @@
+// GET
+export const SEARCH_SONGS = 'SEARCH_SONGS';
+export const SET_SEARCH_SONGS = 'SET_SEARCH_SONGS';
