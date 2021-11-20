@@ -1,54 +1,68 @@
 import axios from 'axios';
 import config from '../config';
 import cogoToast from 'cogo-toast';
-import qs from 'qs';
+import { call, select, put } from 'redux-saga/effects';
+import { setIsLogged } from '../store/globalAction';
+import { getAuth } from '../store/authSaga';
 
-const authToken = new Buffer(config.api.clientId + ':' + config.api.clientSecret).toString('base64');
-
-const getAuth = async () => {
+export function* request(endpoint = '', method, body, options) {
   try {
-    const auth = await axios(`${config.api.authUrl}`, {
-      method: 'POST',
-      data: qs.stringify({ grant_type: 'client_credentials' }),
-      headers: { Authorization: `Basic ${authToken}`, 'Content-Type': 'application/x-www-form-urlencoded' },
-      validateStatus: function (status) {
-        return status < 500;
-      },
-    });
-    return new Promise((resolve, reject) => {
-      resolve({ ...auth });
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
+    const access_token = yield select((state) => state.Global.access_token);
+    const isLogged = yield select((state) => state.Global.isLogged);
+    let headers = {};
 
-export const request = async (endpoint, method, body, options) => {
-  try {
-    const requestToken = await getAuth();
+    if (access_token.length) {
+      headers = {
+        Authorization: `Bearer ${access_token}`,
+        ...options,
+      };
+    } else {
+      headers = {
+        ...options,
+      };
+    }
 
-    const res = await axios({
+    const endpointGenerator = () => {
+      if (endpoint.includes('http') || endpoint.includes('https')) {
+        return endpoint;
+      } else {
+        return `${config.api.baseUrl}${endpoint}`;
+      }
+    };
+    let endpointUrl = endpointGenerator();
+
+    const res = yield call(axios, {
       method,
-      url: `${config.api.baseUrl}${endpoint}`,
-      headers: { Authorization: `Bearer ${requestToken.data.access_token}` },
+      url: endpointUrl,
+      data: body,
+      headers,
       validateStatus: (status) => status < 500,
     });
-    return new Promise((resolve, reject) => {
-      if (res.status === 200) {
-        resolve({ status: res.status, data: res.data });
-      }
 
-      if (res.status === 401) {
+    console.log({ res });
+    if (res.status === 200) {
+      return { status: res.status, data: res.data };
+    }
+
+    if (res.status === 403) {
+      yield getAuth();
+      window.location.reload();
+    }
+
+    if (res.status === 401) {
+      if (isLogged) {
         cogoToast.warn(res.data.error.message);
-        resolve({ status: res.status, data: res });
       }
+      yield put(setIsLogged(false));
+      return { status: res.status, data: res };
+    }
 
-      if (res.status === 400) {
-        cogoToast.error(res.data.error.message);
-        resolve({ status: res.status, data: res.data });
-      }
-    });
+    if (res.status === 400) {
+      cogoToast.error(res.data.error.message);
+
+      return { status: res.status, data: res };
+    }
   } catch (error) {
     console.log(error);
   }
-};
+}

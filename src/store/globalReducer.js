@@ -1,9 +1,22 @@
-import { SET_LOADING, SET_SELECTED_SIDEBAR, RESET_SIDE_BAR } from './globalAction';
-import { faHeadphonesAlt, faHeart, faPlayCircle, faSearch, faStream } from '@fortawesome/free-solid-svg-icons';
+import {
+  SET_LOADING,
+  SET_SELECTED_SIDEBAR,
+  SET_ACCESS_TOKEN,
+  SET_ISLOGGED,
+  SET_AUTHORIZATION_CODE,
+  SET_USER_PROFILE,
+  LOGOUT,
+} from './globalAction';
+import { faHeadphonesAlt, faHeart, faPlayCircle, faSearch, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 const initialState = {
   playedSong: '',
   loading: false,
+  isLogged: false,
+  access_token: '',
+  refresh_token: '',
+  authorizationCode: '',
+  userProfile: {},
   sidebar: [
     {
       path: '/',
@@ -18,21 +31,16 @@ const initialState = {
       isSelected: { selected: false },
     },
     {
-      path: '/favourites',
-      icon: faHeart,
-      name: 'Favourites',
-      isSelected: { selected: false },
-    },
-    {
       path: '/playlists',
       icon: faPlayCircle,
       name: 'Playlists',
       isSelected: { selected: false },
     },
     {
-      path: '/charts',
-      icon: faStream,
-      name: 'Charts',
+      path: '/',
+      icon: faSignOutAlt,
+      name: 'Logout',
+      isLogout: true,
       isSelected: { selected: false },
     },
   ],
@@ -45,6 +53,16 @@ const GlobalReducer = (state = initialState, action) => {
         ...state,
         loading: action.payload,
       };
+    case SET_USER_PROFILE:
+      return {
+        ...state,
+        userProfile: action.payload,
+      };
+    case SET_AUTHORIZATION_CODE:
+      return {
+        ...state,
+        authorizationCode: action.payload,
+      };
     case SET_SELECTED_SIDEBAR:
       const newSideBar = state.sidebar.map((val) => ({ ...val, isSelected: { selected: false } }));
       newSideBar[action.index].isSelected = { selected: true };
@@ -52,6 +70,20 @@ const GlobalReducer = (state = initialState, action) => {
         ...state,
         sidebar: newSideBar,
       };
+    case SET_ACCESS_TOKEN:
+      return {
+        ...state,
+        access_token: action.payload.access_token,
+        refresh_token: action.payload.refresh_token,
+      };
+    case SET_ISLOGGED:
+      return {
+        ...state,
+        isLogged: action.payload,
+      };
+
+    case LOGOUT:
+      return initialState;
 
     default:
       return state;

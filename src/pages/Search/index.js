@@ -27,7 +27,6 @@ export default function SearchContent() {
       {Discover.categoriesLoading || loading ? (
         <>
           <Loading.BaseLoading />
-          <Loading.BaseLoading />
         </>
       ) : (
         <>

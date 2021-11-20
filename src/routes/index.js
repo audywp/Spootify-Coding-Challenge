@@ -4,6 +4,7 @@ import Search from '../pages/Search';
 import Favourites from '../pages/Favourites';
 import Playlists from '../pages/Playlists';
 import Charts from '../pages/Charts';
+import Redirect from '../common/components/Redirect/Redirect';
 
 export const routes = [
   {
@@ -30,6 +31,11 @@ export const routes = [
   {
     path: '/charts',
     element: <Charts />,
+    child: [],
+  },
+  {
+    path: '/redirect',
+    element: <Redirect />,
     child: [],
   },
 ];

@@ -7,6 +7,8 @@ import {
   SET_LOADING_NEW_RELEASE,
 } from './constant';
 
+import { LOGOUT } from '../../../store/globalAction';
+
 const initialState = {
   newReleases: { albums: { items: [] } },
   newReleaseLoading: false,
@@ -36,6 +38,8 @@ const DiscoverReducer = (state = initialState, action) => {
     case SET_LOADING_NEW_RELEASE:
       return { ...state, newReleaseLoading: action.payload };
 
+    case LOGOUT:
+      return initialState;
     default:
       return state;
   }
