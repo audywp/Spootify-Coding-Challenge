@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlayCircle, faPauseCircle, faWindowClose } from '@fortawesome/free-solid-svg-icons';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -14,10 +16,20 @@ import './_table.scss';
 import { millisToMinutesAndSeconds } from '../../../helpers/timeConverter';
 import { useAudio } from '../../../helpers/audioPlayer';
 import { useSelector } from 'react-redux';
+import { PlayCircle } from '@mui/icons-material';
 
 export default function TableComponent({ column = [], data = [], onClick = () => {}, type = '' }) {
   const { preview_url } = useSelector((state) => state.Global.playedSong);
   const [toggle, changeSong] = useAudio(preview_url);
+  const [lists, setLists] = useState([]);
+
+  useEffect(() => {
+    setLists((prevState) => {
+      return data.map((Val) => {
+        return { ...Val, active: false };
+      });
+    });
+  }, [data]);
 
   return (
     <Box height='80%' mb={4} padding='0 20px'>
@@ -31,6 +43,9 @@ export default function TableComponent({ column = [], data = [], onClick = () =>
         <Table sx={{ minWidth: 650 }} aria-label='caption table'>
           <TableHead>
             <TableRow>
+              <TableCell align='left'>
+                <span>action</span>
+              </TableCell>
               {column.map((val, ind) => {
                 return (
                   <TableCell align='left'>
@@ -41,17 +56,33 @@ export default function TableComponent({ column = [], data = [], onClick = () =>
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((row) => {
+            {lists.map((row, index) => {
               return (
                 <TableRow
                   onClick={() => {
                     changeSong();
-                    onClick(row);
+                    onClick(row, index);
+                    setLists((prevState) => {
+                      const newArray = [];
+                      prevState.forEach((val) => {
+                        newArray.push({ ...val, active: false });
+                      });
+                      newArray[index].active = true;
+                      return newArray;
+                    });
                   }}
                   hover
+                  selected={row.active}
                   key={row.name}
                   className={!row.preview_url ? 'no__preview' : 'with__preview'}
                 >
+                  <TableCell align='left' style={{ borderBottom: 'none', border: 'none' }} component='th' scope='row'>
+                    {!row.preview_url ? (
+                      <FontAwesomeIcon icon={faWindowClose} color='#FFB5A7' />
+                    ) : (
+                      <FontAwesomeIcon icon={row.active ? faPauseCircle : faPlayCircle} color='#FFB5A7' />
+                    )}
+                  </TableCell>
                   {column.map((val, ind) => {
                     if (val.keyObject === 'artists') {
                       return (

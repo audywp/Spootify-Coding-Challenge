@@ -22,8 +22,8 @@ export default function SearchContent() {
     return () => dispatch(setSearchSongs({ artists: { items: [] }, tracks: { items: [] } }));
   }, []);
 
-  const savePlayedSong = (data) => {
-    dispatch(playSong(data));
+  const savePlayedSong = (data, index) => {
+    dispatch(playSong({ ...data, index }));
   };
 
   return (

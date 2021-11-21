@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faStepForward,
@@ -17,6 +17,7 @@ import { useAudio } from '../../../helpers/audioPlayer';
 import { useSelector } from 'react-redux';
 import { millisToMinutesAndSeconds } from '../../../helpers/timeConverter';
 import { Box } from '@mui/system';
+import { Slider } from '@mui/material';
 export default function Player() {
   const {
     preview_url,
@@ -27,9 +28,11 @@ export default function Player() {
     duration_ms,
   } = useSelector((state) => state.Global.playedSong);
   const isPlaying = useSelector((state) => state.Global.isPlaying);
+  const duration = useSelector((state) => state.Global.duration);
 
-  const [duration, setDuration] = useState(duration_ms);
   const [toggle, changeSong, isMuted, muted] = useAudio(preview_url);
+
+  console.log(100 - duration / 300, 'ini duration');
 
   return (
     <div className='player'>
@@ -47,16 +50,20 @@ export default function Player() {
         <FontAwesomeIcon onClick={toggle} icon={isPlaying ? faPauseCircle : faPlayCircle} />
         <FontAwesomeIcon icon={faStepForward} />
       </div>
-      <div className='player__seekbar'></div>
+
+      <div className='player__seekbar'>
+        <Slider aria-label='Volume' value={100 - duration / 300} size='medium' />
+      </div>
+
       <Box mr={4}>
-        <span>{millisToMinutesAndSeconds(30000)}</span>
+        <span>{millisToMinutesAndSeconds(duration)}</span>
       </Box>
       <div className='player__actions'>
-        <FontAwesomeIcon icon={faEllipsisH} />
-        <FontAwesomeIcon icon={faHeart} />
-        <FontAwesomeIcon icon={faRandom} />
-        <FontAwesomeIcon icon={faRetweet} />
-        <FontAwesomeIcon onClick={() => muted()} icon={isMuted ? faVolumeMute : faVolumeDown} />
+        {/* <FontAwesomeIcon icon={faEllipsisH} /> */}
+        {/* <FontAwesomeIcon icon={faHeart} /> */}
+        {/* <FontAwesomeIcon icon={faRandom} /> */}
+        {/* <FontAwesomeIcon icon={faRetweet} /> */}
+        {/* <FontAwesomeIcon onClick={() => muted()} icon={isMuted ? faVolumeMute : faVolumeDown} /> */}
       </div>
     </div>
   );

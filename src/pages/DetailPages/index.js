@@ -36,8 +36,8 @@ export default function DetailPages() {
     dispatch(getDetail(id, type));
   }, []);
 
-  const savePlayedSong = (data) => {
-    dispatch(playSong(data));
+  const savePlayedSong = (data, index) => {
+    dispatch(playSong({ ...data, index }));
   };
 
   return (

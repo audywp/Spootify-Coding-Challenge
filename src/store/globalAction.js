@@ -5,6 +5,7 @@ export const SET_ACCESS_TOKEN = 'SET_ACCESS_TOKEN';
 export const SET_AUTHORIZATION_CODE = 'SET_AUTHORIZATION_CODE';
 export const SET_USER_PROFILE = 'SET_USER_PROFILE';
 export const SET_IS_PLAYING = 'SET_IS_PLAYING';
+export const SET_DURATION = 'SET_DURATION';
 
 export const DO_LOGIN = 'DO_LOGIN';
 export const PLAY_SONG = 'PLAY_SONG';
@@ -33,3 +34,5 @@ export const playSong = (payload) => ({ type: PLAY_SONG, payload });
 export const setIsPlaying = (payload) => ({ type: SET_IS_PLAYING, payload });
 
 export const logout = () => ({ type: LOGOUT });
+
+export const setDuration = (payload) => ({ type: SET_DURATION, payload });

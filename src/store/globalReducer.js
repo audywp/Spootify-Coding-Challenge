@@ -5,9 +5,10 @@ import {
   SET_ISLOGGED,
   SET_AUTHORIZATION_CODE,
   SET_USER_PROFILE,
+  SET_DURATION,
+  SET_IS_PLAYING,
   LOGOUT,
   PLAY_SONG,
-  SET_IS_PLAYING,
 } from './globalAction';
 import { faHeadphonesAlt, faPlayCircle, faSearch, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
@@ -20,6 +21,7 @@ const initialState = {
   refresh_token: '',
   authorizationCode: '',
   userProfile: {},
+  duration: 30000,
   sidebar: [
     {
       path: '/',
@@ -31,12 +33,6 @@ const initialState = {
       path: '/search',
       icon: faSearch,
       name: 'Search',
-      isSelected: { selected: false },
-    },
-    {
-      path: '/playlists',
-      icon: faPlayCircle,
-      name: 'Playlists',
       isSelected: { selected: false },
     },
     {
@@ -55,6 +51,11 @@ const GlobalReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: action.payload,
+      };
+    case SET_DURATION:
+      return {
+        ...state,
+        duration: action.payload,
       };
     case SET_IS_PLAYING:
       return {

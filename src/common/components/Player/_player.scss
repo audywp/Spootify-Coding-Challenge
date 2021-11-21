@@ -106,8 +106,6 @@
 
   &__seekbar {
     flex: 1;
-    height: 4px;
-    background: $primary-grey;
     margin-left: 50px;
     margin-right: 50px;
     border-radius: 2px;
@@ -119,7 +117,7 @@
   }
 
   &__actions {
-    color: $primary-grey;
+    color: $primary-blue;
 
     > .fa-ellipsis-h {
       display: none;
@@ -127,7 +125,7 @@
     }
 
     @media only screen and (max-width: 750px) {
-      > svg:not(.fa-ellipsis-h)  {
+      > svg:not(.fa-ellipsis-h) {
         display: none;
         width: 0 !important;
         margin: 0;
