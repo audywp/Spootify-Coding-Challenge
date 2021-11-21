@@ -51,9 +51,20 @@ export default connect(
               </>
             ) : (
               <>
-                <DiscoverBlock text='RELEASED THIS WEEK' id='released' data={newReleases.albums.items} />
-                <DiscoverBlock text='FEATURED PLAYLISTS' id='featured' data={playlists.playlists.items} />
-                <DiscoverBlock text='BROWSE' id='browse' data={categories.categories.items} imagesKey='icons' />
+                <DiscoverBlock type='albums' text='RELEASED THIS WEEK' id='released' data={newReleases.albums.items} />
+                <DiscoverBlock
+                  type='playlists'
+                  text='FEATURED PLAYLISTS'
+                  id='featured'
+                  data={playlists.playlists.items}
+                />
+                <DiscoverBlock
+                  type='categories'
+                  text='BROWSE'
+                  id='browse'
+                  data={categories.categories.items}
+                  imagesKey='icons'
+                />
               </>
             )}
           </div>

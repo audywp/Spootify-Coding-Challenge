@@ -3,6 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import DiscoverItem from './DiscoverItem';
 import '../styles/_discover-block.scss';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { getDetail, setSelectedDetail } from '../../../../DetailPages/redux/action';
+import { setLoading } from '../../../../../store/globalAction';
 
 function scrollContainer(id, { isNegative } = {}) {
   return () => {
@@ -13,7 +17,24 @@ function scrollContainer(id, { isNegative } = {}) {
   };
 }
 
-export default function DiscoverBlock({ text, id, data, imagesKey = 'images', contentType = 'row' }) {
+export default function DiscoverBlock({ text, id, data, imagesKey = 'images', contentType = 'row', type = '' }) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const onClick = (id) => {
+    if (type === 'categories') {
+      navigate(`/browse`);
+    } else {
+      if (type === 'artists') {
+        navigate(`/browse`);
+      } else {
+        navigate(`/detail?type=${type}`);
+      }
+    }
+    dispatch(setSelectedDetail({ id, type }));
+    dispatch(setLoading(true));
+  };
+
   return (
     <div className='discover-block'>
       <div className='discover-block__header'>
@@ -27,8 +48,8 @@ export default function DiscoverBlock({ text, id, data, imagesKey = 'images', co
         ) : null}
       </div>
       <div className={contentType === 'row' ? 'discover-block__row' : 'discover-block__column'} id={id}>
-        {data.map(({ [imagesKey]: images, name }) => (
-          <DiscoverItem key={name} images={images} name={name} />
+        {data.map(({ [imagesKey]: images, name, id }) => (
+          <DiscoverItem onClick={() => onClick(id)} key={name} images={images} name={name} />
         ))}
       </div>
     </div>

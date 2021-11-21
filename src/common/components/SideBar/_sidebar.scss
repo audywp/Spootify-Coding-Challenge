@@ -67,7 +67,6 @@
     }
 
     &--selected {
-      pointer-events: none;
       background: linear-gradient(to right, $secondary-blue, transparent 95%);
     }
   }

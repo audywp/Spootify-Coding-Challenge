@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef } from 'react';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ModalLogin from './common/components/ModalLogin/Login';
@@ -10,7 +10,13 @@ export default function Root() {
     <BrowserRouter>
       <Routes>
         {routes.map((val, ind) => {
-          return <Route path={val.path} element={val.element} />;
+          return (
+            <Route path={val.path} element={val.element}>
+              {val.child.map((value) => {
+                return <Route path={value.path} element={value.element} />;
+              })}
+            </Route>
+          );
         })}
       </Routes>
       <ModalLogin />

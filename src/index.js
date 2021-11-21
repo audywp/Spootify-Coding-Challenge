@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Routes from './routes';
-import CoreLayout from './common/layouts/CoreLayout';
+
 import './styles/_main.scss';
 import Root from './root';
 import { Provider } from 'react-redux';
@@ -10,6 +9,7 @@ import { Persistor, Store } from './store/store';
 
 import { createTheme } from '@mui/material/styles';
 import { ThemeProvider } from '@mui/system';
+import Audio from './audio';
 
 let theme = createTheme({
   palette: {
@@ -27,6 +27,7 @@ ReactDOM.render(
     <Provider store={Store}>
       <PersistGate persistor={Persistor}>
         <ThemeProvider theme={theme}>
+          <Audio />
           <Root />
         </ThemeProvider>
       </PersistGate>

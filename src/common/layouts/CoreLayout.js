@@ -3,12 +3,12 @@ import Header from '../components/Header';
 import SideBar from '../components/SideBar';
 import Player from '../components/Player';
 
-function CoreLayout({ children, history }) {
+function CoreLayout({ children, history, headers = true, data = {} }) {
   return (
     <div className='main'>
       <SideBar />
       <div className='main__content'>
-        <Header history={history} />
+        <Header data={data} history={history} header={headers} />
         <div className='main__content__child'>{children}</div>
       </div>
       <Player />

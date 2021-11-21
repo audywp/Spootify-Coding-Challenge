@@ -1,0 +1,4 @@
+export const GET_DETAIL = 'GET_DETAIL';
+export const SET_DETAIL = 'SET_DETAIL';
+export const SET_SELECTED_DETAIL = 'SET_SELECTED_DETAIL';
+export const RESET_DETAIL = 'RESET_DETAIL';

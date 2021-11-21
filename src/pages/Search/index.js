@@ -49,11 +49,12 @@ export default function SearchContent() {
                 data={Search.tracks.items}
                 onClick={savePlayedSong}
               />
-              <DiscoverBlock text='Artists' id='artists' data={Search.artists.items} />
+              <DiscoverBlock type='artists' text='Artists' id='artists' data={Search.artists.items} />
             </>
           ) : (
             <DiscoverBlock
               text='BROWSE'
+              type='categories'
               id='browse'
               data={Discover.categories.categories.items}
               imagesKey='icons'

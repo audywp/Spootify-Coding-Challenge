@@ -5,11 +5,23 @@ import Favourites from '../pages/Favourites';
 import Playlists from '../pages/Playlists';
 import Charts from '../pages/Charts';
 import Redirect from '../common/components/Redirect/Redirect';
+import DetailPages from '../pages/DetailPages';
+import Browse from '../pages/DetailPages/Browse';
 
 export const routes = [
   {
     path: '/',
     element: <Discover />,
+    child: [],
+  },
+  {
+    path: 'detail',
+    element: <DetailPages />,
+    child: [],
+  },
+  {
+    path: 'browse',
+    element: <Browse />,
     child: [],
   },
   {

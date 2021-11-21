@@ -12,13 +12,13 @@ import { Avatar } from '@mui/material';
 
 import './_table.scss';
 import { millisToMinutesAndSeconds } from '../../../helpers/timeConverter';
+import { useAudio } from '../../../helpers/audioPlayer';
+import { useSelector } from 'react-redux';
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
+export default function TableComponent({ column = [], data = [], onClick = () => {}, type = '' }) {
+  const { preview_url } = useSelector((state) => state.Global.playedSong);
+  const [toggle, changeSong] = useAudio(preview_url);
 
-export default function TableComponent({ column = [], data = [], onClick = () => {} }) {
-  console.log(data);
   return (
     <Box height='80%' mb={4} padding='0 20px'>
       <Box mb={2}>
@@ -41,60 +41,70 @@ export default function TableComponent({ column = [], data = [], onClick = () =>
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((row) => (
-              <TableRow onClick={() => onClick(row)} hover key={row.name}>
-                {column.map((val, ind) => {
-                  if (val.keyObject === 'artists') {
-                    return (
-                      <TableCell
-                        align='left'
-                        style={{ borderBottom: 'none', border: 'none' }}
-                        component='th'
-                        scope='row'
-                      >
-                        <span>{row[val.keyObject][0].name}</span>
-                      </TableCell>
-                    );
-                  } else if (val.keyObject === 'album') {
-                    return (
-                      <TableCell
-                        align='left'
-                        style={{ borderBottom: 'none', border: 'none' }}
-                        component='th'
-                        scope='row'
-                      >
-                        {/* {row[val.keyObject]} */}
-                        <span>
-                          <Avatar alt={row[val.keyObject].name} src={row[val.keyObject].images[0].url} />
-                        </span>
-                      </TableCell>
-                    );
-                  } else if (val.keyObject === 'duration_ms') {
-                    return (
-                      <TableCell
-                        align='left'
-                        style={{ borderBottom: 'none', border: 'none' }}
-                        component='th'
-                        scope='row'
-                      >
-                        <span>{millisToMinutesAndSeconds(row[val.keyObject])}</span>
-                      </TableCell>
-                    );
-                  } else {
-                    return (
-                      <TableCell
-                        align='left'
-                        style={{ borderBottom: 'none', border: 'none' }}
-                        component='th'
-                        scope='row'
-                      >
-                        <span>{row[val.keyObject]}</span>
-                      </TableCell>
-                    );
-                  }
-                })}
-              </TableRow>
-            ))}
+            {data.map((row) => {
+              return (
+                <TableRow
+                  onClick={() => {
+                    changeSong();
+                    onClick(row);
+                  }}
+                  hover
+                  key={row.name}
+                  className={!row.preview_url ? 'no__preview' : 'with__preview'}
+                >
+                  {column.map((val, ind) => {
+                    if (val.keyObject === 'artists') {
+                      return (
+                        <TableCell
+                          align='left'
+                          style={{ borderBottom: 'none', border: 'none' }}
+                          component='th'
+                          scope='row'
+                        >
+                          <span>{row[val.keyObject][0].name}</span>
+                        </TableCell>
+                      );
+                    } else if (val.keyObject === 'album') {
+                      return (
+                        <TableCell
+                          align='left'
+                          style={{ borderBottom: 'none', border: 'none' }}
+                          component='th'
+                          scope='row'
+                        >
+                          {/* {row[val.keyObject]} */}
+                          <span>
+                            <Avatar alt={row[val.keyObject].name} src={row[val.keyObject].images[0].url} />
+                          </span>
+                        </TableCell>
+                      );
+                    } else if (val.keyObject === 'duration_ms') {
+                      return (
+                        <TableCell
+                          align='left'
+                          style={{ borderBottom: 'none', border: 'none' }}
+                          component='th'
+                          scope='row'
+                        >
+                          <span>{millisToMinutesAndSeconds(row[val.keyObject])}</span>
+                        </TableCell>
+                      );
+                    } else {
+                      return (
+                        <TableCell
+                          align='left'
+                          style={{ borderBottom: 'none', border: 'none' }}
+                          component='th'
+                          scope='row'
+                        >
+                          <span>{row[val.keyObject]}</span>
+                        </TableCell>
+                      );
+                    }
+                  })}
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>

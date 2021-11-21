@@ -4,6 +4,7 @@ export const SET_ISLOGGED = 'SET_ISLOGGED';
 export const SET_ACCESS_TOKEN = 'SET_ACCESS_TOKEN';
 export const SET_AUTHORIZATION_CODE = 'SET_AUTHORIZATION_CODE';
 export const SET_USER_PROFILE = 'SET_USER_PROFILE';
+export const SET_IS_PLAYING = 'SET_IS_PLAYING';
 
 export const DO_LOGIN = 'DO_LOGIN';
 export const PLAY_SONG = 'PLAY_SONG';
@@ -28,5 +29,7 @@ export const doLogin = (payload, callback) => ({ type: DO_LOGIN, payload, callba
 export const getProfile = (payload) => ({ type: GET_PROFILE, payload });
 
 export const playSong = (payload) => ({ type: PLAY_SONG, payload });
+
+export const setIsPlaying = (payload) => ({ type: SET_IS_PLAYING, payload });
 
 export const logout = () => ({ type: LOGOUT });
