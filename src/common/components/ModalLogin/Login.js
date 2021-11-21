@@ -8,8 +8,7 @@ import { Box } from '@mui/system';
 // other
 import { v4 as uuidv4 } from 'uuid';
 import Logo from '../../../assets/images/logo.png';
-import { useNavigate } from 'react-router-dom';
-import { doLogin } from '../../../store/globalAction';
+
 import Config from '../../../config';
 
 const { REACT_APP_REDIRECT_URI } = process.env;
