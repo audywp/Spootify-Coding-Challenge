@@ -11,6 +11,8 @@ import { createTheme } from '@mui/material/styles';
 import { ThemeProvider } from '@mui/system';
 import Audio from './audio';
 
+const newVariable = 'newVariable';
+
 let theme = createTheme({
   palette: {
     primary: {
