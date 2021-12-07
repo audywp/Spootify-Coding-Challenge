@@ -1,4 +1,4 @@
-import { all, takeLatest } from 'redux-saga/effects';
+import { all } from 'redux-saga/effects';
 import { DetailSagaWorker } from '../pages/DetailPages/redux/saga';
 import { DiscoverSaga } from '../pages/Discover/redux/saga';
 import { SearchSaga } from '../pages/Search/redux/saga';

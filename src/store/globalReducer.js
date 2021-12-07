@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import {
   SET_LOADING,
   SET_SELECTED_SIDEBAR,

@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState, createRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setIsPlaying } from '../store/globalAction';
@@ -31,6 +33,7 @@ export const useAudio = (url) => {
   const changeSong = async () => {
     dispatch(setIsPlaying(true));
     AudioRef.current.audioEl.current.play();
+    console.log('hallo');
   };
 
   useEffect(() => {
@@ -41,4 +44,16 @@ export const useAudio = (url) => {
   }, []);
 
   return [toggle, changeSong, isMuted, muted];
+};
+
+export const Dispatch = (action = () => {}) => {
+  const dispatch = useDispatch();
+
+  return dispatch(action);
+};
+
+export const Select = (key = '') => {
+  const state = useSelector((state) => state[key]);
+
+  return { ...state };
 };

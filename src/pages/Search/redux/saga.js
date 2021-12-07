@@ -1,4 +1,4 @@
-import { call, all, put, takeLatest, takeEvery } from 'redux-saga/effects';
+import { call, all, put, takeEvery } from 'redux-saga/effects';
 import { request } from '../../../helpers/Api';
 import { setLoading } from '../../../store/globalAction';
 import { setSearchSongs } from './action';

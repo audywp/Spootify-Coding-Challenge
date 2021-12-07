@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 // MUI
 import { Button, Divider, Modal, Typography } from '@mui/material';
@@ -12,7 +12,7 @@ import Logo from '../../../assets/images/logo.png';
 import Config from '../../../config';
 
 const { REACT_APP_REDIRECT_URI } = process.env;
-const { clientId, clientSecret, authRedirect } = Config.api;
+const { clientId, authRedirect } = Config.api;
 
 const style = {
   position: 'absolute',

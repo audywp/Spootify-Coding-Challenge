@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import CoreLayout from '../../common/layouts/CoreLayout';
@@ -9,10 +11,11 @@ import { searchSongs, setSearchSongs } from './redux/action';
 import Table from '../../common/components/Table/Table';
 import SearchInput from './Component/SearchInput';
 import { playSong } from '../../store/globalAction';
+import { Select } from '../../helpers/audioPlayer';
 
 export default function SearchContent() {
   const dispatch = useDispatch();
-  const Discover = useSelector((state) => state.Discover);
+  const Discover = Select('Discover');
   const Search = useSelector((state) => state.Search.search);
   const loading = useSelector((state) => state.Global.loading);
 

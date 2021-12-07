@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Box } from '@mui/system';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,7 +8,7 @@ import CoreLayout from '../../common/layouts/CoreLayout';
 import { Loading } from '../../common/layouts/SkeletonLoading';
 import { playSong } from '../../store/globalAction';
 import DiscoverBlock from '../Discover/components/DiscoverBlock/components/DiscoverBlock';
-import { getDetail, resetDetail } from './redux/action';
+import { getDetail } from './redux/action';
 
 export default function DetailPages() {
   const params = new URLSearchParams(window.location.search);

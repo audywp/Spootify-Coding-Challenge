@@ -5,7 +5,7 @@ import DiscoverItem from './DiscoverItem';
 import '../styles/_discover-block.scss';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { getDetail, setSelectedDetail } from '../../../../DetailPages/redux/action';
+import { setSelectedDetail } from '../../../../DetailPages/redux/action';
 import { setLoading } from '../../../../../store/globalAction';
 
 function scrollContainer(id, { isNegative } = {}) {
