@@ -5,6 +5,8 @@ import ModalLogin from './common/components/ModalLogin/Login';
 
 import { routes } from './routes';
 
+const newVariable = 'asd';
+
 export default function Root() {
   return (
     <BrowserRouter>

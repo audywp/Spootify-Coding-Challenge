@@ -7,5 +7,5 @@ const config = {
     clientSecret: process.env.REACT_APP_SPOTIFY_CLIENT_SECRET,
   },
 };
-
+const newVariable = 'asd';
 export default config;

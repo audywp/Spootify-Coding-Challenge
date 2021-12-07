@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { AudioRef } from './helpers/audioPlayer';
 import { setIsPlaying, setDuration } from './store/globalAction';
+const newVariable = 'asd';
 
 const Audio = () => {
   const dispatch = useDispatch();
